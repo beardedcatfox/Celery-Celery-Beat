@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reminder</title>
+</head>
+<body bgcolor="#c4c4c4">
+    <div style="text-align:center">
+        <form action="{% url 'send_mail' %}" method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="submit">
+        </form>
+    </div>
+</body>
+</html>
