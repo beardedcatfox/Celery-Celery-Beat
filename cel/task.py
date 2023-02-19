@@ -1,9 +1,13 @@
-from datetime import datetime
-import requests
 from bs4 import BeautifulSoup
-from django.core.mail import send_mail
+
 from celery import shared_task
+
 from core.celery import app
+
+from django.core.mail import send_mail
+
+import requests
+
 from .models import Author, Quote
 
 
