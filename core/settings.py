@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 import os
 from pathlib import Path
 
+from celery.schedules import crontab
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -47,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'django_celery_results',
+    'django_celery_beat',
     'cel',
 ]
 
@@ -130,7 +133,7 @@ CELERY_TIMEZONE = "Europe/Kiev"
 CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30 * 60
 CELERY_IMPORTS = ('cel.task',)
-
+CELERY_RESULT_BACKEND = 'redis://default:redispw@localhost:55000'
 CELERY_BROKER_URL = 'redis://default:redispw@localhost:55000'
 
 CELERY_CACHE_BACKEND = 'default'
@@ -141,6 +144,12 @@ CACHES = {
     }
 }
 
+CELERY_BEAT_SCHEDULE = {
+    'add-new-quotes-every-2-hours': {
+        'task': 'cel.task.fetch_new_quotes',
+        'schedule': crontab(minute=0, hour='1-23/2')
+    },
+}
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/

@@ -3,14 +3,18 @@
 ```
     python manage.py migrate
 ```
-
+```
+    python manage.py makemigrations cel
+```
+```
+    python manage.py sqlmigrate cel 0001
+```
+```
+    python manage.py createsuperuser
+```
 ```bash
     ./manage.py runserver
 ```
-
 ```bash
-    celery -A cel worker --loglevel=info
+    celery -A cel worker -B -l INFO
 ```
-
-## [Form Page](http://127.0.0.1:8000/cel/send_mail/)
-
